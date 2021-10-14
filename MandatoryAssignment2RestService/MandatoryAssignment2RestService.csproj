@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="MandatoryAssigment1Library">
+      <HintPath>ModelDll\MandatoryAssigment1Library.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
