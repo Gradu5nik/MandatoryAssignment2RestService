@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+//using MandatoryAssignment2RestService.Dll;
 using MandatoryAssigment1Library;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -31,36 +33,47 @@ namespace MandatoryAssignment2RestService.Controllers
 
         // GET api/<ValuesController>/5
         [HttpGet("{isbn}")]
-        public Book Get(string isbn)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public ActionResult<Book> Get(string isbn)
         {
             IEnumerable<Book> res = Repo.Where(x => x.ISBN13 == isbn);
-            return res.FirstOrDefault();
+            if (res.Count() == 0) return NoContent();
+            Book b = res.FirstOrDefault();
+            return b;
         }
 
         // POST api/<ValuesController>
         [HttpPost]
-        public void Post([FromBody] Book newBook)
+        public void Post(/*[FromBody]*/ Book newBook)
         {
             Repo.Add(newBook);
         }
 
         // PUT api/<ValuesController>/5
         [HttpPut("{isbn}")]
-        public void Put(string isbn, [FromBody] Book updatedBook)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public ActionResult Put(string isbn, /*[FromBody]*/ Book updatedBook)
         {
             Book get = Repo.Find(x => x.ISBN13 == isbn);
             //if (get == null) { Console.WriteLine("didn't find the book you wanted to update, check isbn or title and try again"); }
+            if (get==null)
+            {
+                return NoContent();
+            }
             get.Author = updatedBook.Author;
             get.Title = updatedBook.Title;
             get.NoOfPages = updatedBook.NoOfPages;
             get.ISBN13 = updatedBook.ISBN13;
+            return Ok();
         }
 
         // DELETE api/<ValuesController>/5
         [HttpDelete("{isbn}")]
         public void Delete(String isbn)
         {
-            Repo.Remove(Get(isbn));
+            Repo.Remove(Repo.Find(x => x.ISBN13 == isbn));
         }
     }
 }

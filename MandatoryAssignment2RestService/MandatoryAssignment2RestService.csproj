@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <Reference Include="MandatoryAssigment1Library">
-      <HintPath>ModelDll\MandatoryAssigment1Library.dll</HintPath>
+      <HintPath>Dll\MandatoryAssigment1Library.dll</HintPath>
     </Reference>
   </ItemGroup>
 
